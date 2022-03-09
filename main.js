@@ -29,10 +29,14 @@ const closeIssue = id => {
   fetchIssues();
 }
 
-const deleteIssue = id => {
+const deleteIssue = (id, e) => {
+  let idNum=id+'';
   const issues = JSON.parse(localStorage.getItem('issues'));
-  const remainingIssues = issues.filter( issue.id !== id )
+  
+  const remainingIssues = issues.filter(issue=> issue.id !== idNum )
   localStorage.setItem('issues', JSON.stringify(remainingIssues));
+  e.target.parentNode.remove()
+  
 }
 
 const fetchIssues = () => {
@@ -50,7 +54,7 @@ const fetchIssues = () => {
                               <p><span class="glyphicon glyphicon-time"></span> ${severity}</p>
                               <p><span class="glyphicon glyphicon-user"></span> ${assignedTo}</p>
                               <a href="#" onclick="setStatusClosed(${id})" class="btn btn-warning">Close</a>
-                              <a href="#" onclick="deleteIssue(${id})" class="btn btn-danger">Delete</a>
+                              <a href="#" onclick="deleteIssue(${id}, event)" class="btn btn-danger">Delete</a>
                               </div>`;
   }
 }
